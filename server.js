@@ -32,11 +32,14 @@ app.use("/kill", killRoutes);
 app.use(homeRoutes);
 app.use((request, response) => {
   const { url } = request;
+  const products = require('./models/Product').getAll();
+  const cartCount = products.length;
 
   response.status(STATUS_CODE.NOT_FOUND).render("404", {
     headTitle: "404",
     menuLinks: MENU_LINKS,
     activeLinkPath: "",
+    cartCount,
   });
   logger.getErrorLog(url);
 });
